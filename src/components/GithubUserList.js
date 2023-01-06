@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { GithubUser } from "./GithubUser";
+import useGithubUser from "./useGithubUser";
 
 export const GithubUserList = () => {
     const [userList, setUserList] = useState([]);
@@ -7,6 +8,9 @@ export const GithubUserList = () => {
     const [searchUser, setSearchUser] = useState('');
 
     const searchInput = document.querySelector('#username');
+
+    const {data, error, onFetch} = useGithubUser(searchUser, beginSearch, deleteUser);
+
     
     const handleInput = (event) => {
         if (beginSearch)
@@ -18,7 +22,9 @@ export const GithubUserList = () => {
     const handleSearch = () => {
         addUser(searchUser);
 
-        searchInput.value = '';
+        if (searchInput !== null)
+            searchInput.value = '';
+        onFetch();
     };
     
 
@@ -30,9 +36,10 @@ export const GithubUserList = () => {
         setSearchUser('');
     };
 
-    const deleteUser = (username) => setUserList(prev => prev.filter(user => user !== username));
+    function deleteUser(username) {setUserList(prev => prev.filter(user => user !== username));}
     const deleteAllUsers = () => setUserList([]);
 
+    const consoleLogUsersArray = () => console.log(userList);
 
     return (
         <div>
@@ -40,21 +47,19 @@ export const GithubUserList = () => {
             <input name='username' id='username' value={searchUser} onChange={handleInput} autoComplete='off'/>
             <button onClick={handleSearch}>Search</button>
             <button onClick={deleteAllUsers}>Clear Users</button>
+            <button onClick={consoleLogUsersArray}>Print search history</button>
           <div>
-            {   userList.length === 0 ? <h3>No users</h3> 
-                    : userList.length === 1 ? <h3>{userList.length} user</h3> :
-                        <h3>{userList.length} users</h3> 
-            }
+
             {
                 beginSearch ?
-                    userList.map(user => 
-                        <GithubUser 
-                            key={crypto.randomUUID()} 
-                            beginSearch={beginSearch} 
-                            username={user} 
-                            deleteUser={deleteUser}
-                        />)
-                    : <h2>Writing...</h2>
+                <GithubUser 
+                    key={crypto.randomUUID()} 
+                    beginSearch={beginSearch} 
+                    data={data} 
+                    deleteUser={deleteUser}
+                    error={error}
+                />
+                : <h2>Writing...</h2>
             }
           </div>
         </div>

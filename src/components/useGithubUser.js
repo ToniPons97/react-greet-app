@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const useGithubUser = (username, beginSearch, deleteUser) => {
     const [data, setData] = useState('');
     const [error, setError] = useState(null);
     
-    const fetchGithubUser = async (username) => {        
+    const fetchGithubUser = async () => {        
         if (!username && !beginSearch) 
             return;
     
@@ -17,18 +17,14 @@ export const useGithubUser = (username, beginSearch, deleteUser) => {
                 setData(json);                
             } else if (response.status === 404) {
                 deleteUser(username);
-                setError(true);
+                setError(new Error());
             }
         } catch(e) {
             setError(e);
         }
     }
-
-    useEffect(() => {
-        fetchGithubUser(username, beginSearch, deleteUser);
-    }, [username]);
     
-    return { data, error };
+    return { data, error, onFetch: fetchGithubUser };
 }
 
 export default useGithubUser;

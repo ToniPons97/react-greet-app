@@ -1,15 +1,16 @@
 import { Greet } from "./greet";
-import useGithubUser from "./useGithubUser";
 
-export const GithubUser = ({ username, beginSearch, deleteUser }) => {
-    const {data, error} = useGithubUser(username, beginSearch, deleteUser);
+export const GithubUser = ({ data }) => {
 
     return (
         <div>
-            <div>
-                <Greet name={data.login} />
-                <h2>Here is your information</h2>
-            </div>
+            {
+                data !== null ? 
+                <div>
+                    <Greet name={data.login} />
+                    <h2>Here is your information</h2>
+                </div> : <h2>Error 404: User not found</h2>
+            }
             <ul>
                 {!!data?.name && <li><b>Name:</b> {data?.name}</li>}
                 {!!data?.login && <li><b>Username:</b> {data?.login}</li>}
