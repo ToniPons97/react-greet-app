@@ -36,11 +36,15 @@ export const GithubUserList = () => {
 
     return (
         <div>
-          <input name='username' id='username' value={searchUser} onChange={handleInput} autoComplete='off'/>
-          <button onClick={handleSearch}>Search</button>
-          <button onClick={deleteAllUsers}>Clear Users</button>
+            <h1>Github Account Displayer</h1>
+            <input name='username' id='username' value={searchUser} onChange={handleInput} autoComplete='off'/>
+            <button onClick={handleSearch}>Search</button>
+            <button onClick={deleteAllUsers}>Clear Users</button>
           <div>
-            
+            {   userList.length === 0 ? <h3>No users</h3> 
+                    : userList.length === 1 ? <h3>{userList.length} user</h3> :
+                        <h3>{userList.length} users</h3> 
+            }
             {
                 beginSearch ?
                     userList.map(user => 
@@ -50,7 +54,7 @@ export const GithubUserList = () => {
                             username={user} 
                             deleteUser={deleteUser}
                         />)
-                    : <h1>Writing...</h1>
+                    : <h2>Writing...</h2>
             }
           </div>
         </div>
