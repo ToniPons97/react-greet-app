@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Greet } from "./greet";
 
 export const GithubUser = ({ username, beginSearch, deleteUser }) => {
     const [data, setData] = useState('');
@@ -30,7 +31,7 @@ export const GithubUser = ({ username, beginSearch, deleteUser }) => {
     return (
         <div>
             <div>
-                <h1>Hello, {data.login}!</h1>
+                <Greet name={data.login} />
                 <h2>Here is your information</h2>
             </div>
             <ul>
