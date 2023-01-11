@@ -41,10 +41,6 @@ export const GithubUserList = () => {
             <button onClick={handleSearch}>Search</button>
             <button onClick={deleteAllUsers}>Clear Users</button>
           <div>
-            {   userList.length === 0 ? <h3>No users</h3> 
-                    : userList.length === 1 ? <h3>{userList.length} user</h3> :
-                        <h3>{userList.length} users</h3> 
-            }
             {
                 beginSearch ?
                     userList.map(user => 
