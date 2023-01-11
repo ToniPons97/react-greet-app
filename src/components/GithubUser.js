@@ -2,7 +2,9 @@ import { Greet } from "./greet";
 import useGithubUser from "./useGithubUser";
 
 export const GithubUser = ({ username }) => {
-    const {user, error, loading} = useGithubUser(username);
+    const {user, error, loading, onRefresh} = useGithubUser(username);
+    
+    const handleRefresh = () => onRefresh();
 
     return (
         <div>
@@ -13,6 +15,7 @@ export const GithubUser = ({ username }) => {
                         :
                         <>
                             <Greet name={user.login} />
+                            <button onClick={handleRefresh}>Refresh</button>
                             <h2>Here is your information</h2>
                         </>
                 }

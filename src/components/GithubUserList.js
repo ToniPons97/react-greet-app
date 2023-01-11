@@ -11,7 +11,7 @@ export const GithubUserList = () => {
     const handleInput = (event) => {
         if (beginSearch)
             setBeginSearch(false);
-        setSearchUser(event.target.value)
+        setSearchUser(event.target.value);
         
     };
     
