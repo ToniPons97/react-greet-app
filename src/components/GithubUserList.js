@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { GithubUser } from "./GithubUser";
 
 export const GithubUserList = () => {
@@ -6,7 +6,7 @@ export const GithubUserList = () => {
     const [beginSearch, setBeginSearch] = useState(false);
     const [searchUser, setSearchUser] = useState('');
 
-    const searchInput = document.querySelector('#username');
+    const searchInput = useRef(null);
     
     const handleInput = (event) => {
         if (beginSearch)
@@ -18,7 +18,7 @@ export const GithubUserList = () => {
     const handleSearch = () => {
         addUser(searchUser);
 
-        searchInput.value = '';
+        searchInput.current.value = '';
     };
     
 
@@ -37,7 +37,7 @@ export const GithubUserList = () => {
     return (
         <div>
             <h1>Github Account Displayer</h1>
-            <input name='username' id='username' value={searchUser} onChange={handleInput} autoComplete='off'/>
+            <input ref={searchInput} name='username' id='username' value={searchUser} onChange={handleInput} autoComplete='off'/>
             <button onClick={handleSearch}>Search</button>
             <button onClick={deleteAllUsers}>Clear Users</button>
           <div>
